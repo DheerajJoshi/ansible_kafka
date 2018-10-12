@@ -1,0 +1,13 @@
+---
+
+- hosts: zookeeper
+  remote_user: vagrant
+  become: yes
+  roles:
+    - zookeeper
+
+- hosts: kafka
+  remote_user: vagrant
+  become: yes
+  roles:
+    - kafka

@@ -1,0 +1,43 @@
+---
+
+###
+# KAFKA
+###
+
+# Version
+kafka_version: 2.0.0
+
+# Sources
+kafka_tar_url: http://apache.forsale.plus/kafka/{{ kafka_version }}/kafka_2.11-{{ kafka_version }}.tgz
+
+# User
+kafka_group: kafka
+kafka_user: kafka
+
+# Directories
+kafka_path: /opt/kafka
+
+# listeners
+kafka_listerners: PLAINTEXT://:9092
+kafka_advertised_listeners: PLAINTEXT://{{ inventory_hostname }}:9092
+
+# Log Basics
+kafka_log_dirs:
+  - /data/kafka
+kafka_num_partitions: 1
+kafka_num_recovery_threads_per_data_dir: 1
+
+# Zookeeper
+kafka_zookeeper_connect: "{{ groups['zookeeper'] | join(':2181,') }}"
+kafka_zookeeper_connection_timeout: 6000
+
+# Log4j
+kafka_log4j_level: INFO
+kafka_log4j_logger_level: WARN
+kafka_log4j_path: /var/log/kafka
+
+###
+# JVM
+###
+
+kafka_jvm_heap_opts: "-Xmx1G -Xms1G"

@@ -1,0 +1,9 @@
+# List of host where to deploy Kafka
+# List more than one host to create a cluster
+[kafka]
+10.0.4.221 kafka_broker_id=0
+
+# List of host where to deploy Zookeeper
+# List more than one host to create a cluster
+[zookeeper]
+10.0.4.221 myid=1

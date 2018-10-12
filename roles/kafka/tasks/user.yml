@@ -1,0 +1,15 @@
+---
+
+- name: KAFKA USER | Manage group
+  group:
+    name: "{{ kafka_group }}"
+    state: present
+    system: yes
+
+- name: KAFKA USER | Manage user
+  user:
+    name: "{{ kafka_user }}"
+    comment: "Kafka admin user"
+    group: "{{ kafka_group }}"
+    state: present
+    system: yes

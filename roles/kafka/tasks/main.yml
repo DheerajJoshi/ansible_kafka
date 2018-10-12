@@ -1,0 +1,62 @@
+---
+
+- name: KAFKA | Manage user
+  import_tasks: user.yml
+
+- name: KAFKA | Unarchive sources
+  unarchive:
+    src: "{{ kafka_tar_url }}"
+    dest: /opt
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    remote_src: yes
+  args:
+    creates: /opt/kafka_2.11-{{ kafka_version }}
+  notify: Restart kafka
+
+- name: KAFKA | Create symlink
+  file:
+    state: link
+    src: /opt/kafka_2.11-{{ kafka_version }}
+    dest: "{{ kafka_path }}"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+
+- name: KAFKA | Create directories
+  file:
+    state: directory
+    path: "{{ item }}"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0755
+  with_items:
+    - "{{ kafka_log_dirs }}"
+    - "{{ kafka_log4j_path }}"
+    - /etc/kafka
+
+- name: KAFKA | Configuration
+  template:
+    src: etc/kafka/server.properties.j2
+    dest: /etc/kafka/server.properties
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart kafka
+
+- name: KAFKA | Configuration logs
+  template:
+    src: opt/kafka/config/log4j.properties.j2
+    dest: /opt/kafka/config/log4j.properties
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0644
+  notify: Restart kafka
+
+- name: KAFKA | Manage Systemd
+  template:
+    src: lib/systemd/system/kafka.service.j2
+    dest: /lib/systemd/system/kafka.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart kafka
