@@ -15,7 +15,7 @@ What things you need to run this Ansible playbook :
 *   You must have download the ubuntu Xenial64 vagrant box :
 
 ```bash
-$ vagrant box add https://app.vagrantup.com/ubuntu/boxes/xenial64
+$ vagrant box add https://app.vagrantup.com/ubuntu/boxes/bionic64
 ```
 
 ### Usage
@@ -38,7 +38,7 @@ After build, you can check which virtual machine Vagrant has created :
 $ vagrant status
 ```
 
-If all run like it is expected, you should see something like this :
+If everything run as expected, you should see something like this :
 
 ```bash
 $ vagrant status
@@ -64,7 +64,7 @@ To deploy Kafka on Vagrant, you just have to run the Ansible playbook kafka.yml 
 $ ansible-playbook kafka.yml
 ```
 
-If all run like it is expected, you should have a running Kafka/Zookeeper on the Vagrant instance.
+If everything run as expected, you should have a running Kafka/Zookeeper on the Vagrant instance.
 
 #### Destroy
 
